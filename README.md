@@ -16,4 +16,4 @@ A CKAN plugin for previewing GitHub repository resources.
 
 # Usage
 
-The preview associated with this plugin will become available via the resource manager UI, provided the 'resource_type' for the resource is set to either 'github', 'github_repo', 'github_repository', 'github repo' or 'github repository' (not case sensative). For the view to work, the URL of the resource must GitHub repository URL.
+When creating/editing a resource via the UI, check the 'GitHub Repository' checkbox to make this view available. Alternatively, one can update the 'github_repository' extras field of the resource to 'True' via the CKAN API to make the view available.

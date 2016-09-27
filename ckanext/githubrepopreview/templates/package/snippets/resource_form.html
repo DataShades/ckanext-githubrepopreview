@@ -1,0 +1,10 @@
+{% ckan_extends %}
+
+{% block metadata_fields %}
+{{ super () }}
+
+{% call form.checkbox('github_repository', checked=h.githubrepopreview_is_repo(data.id), label='GitHub Repository', value='True') %}
+<br/>
+Check to indicate the resource is a GitHub repository.
+{% endcall %}
+{% endblock %}

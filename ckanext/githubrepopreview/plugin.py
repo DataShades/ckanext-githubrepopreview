@@ -9,6 +9,19 @@ from lib import parse
 
 log = logging.getLogger('ckanext.repopreview')
 
+def is_repo(resource_id):
+    context = {
+        'ignore_auth': True
+    }
+    try:
+        resource = toolkit.get_action('resource_show')(context, {
+            'id': resource_id
+        })
+
+        return resource.get('github_repository', '') == 'True'
+    except:
+        return False
+
 
 def repo_stats(base_url, user=None, password=None):
     def _get_api_url(input_url):
@@ -82,7 +95,8 @@ class GitHubRepoPreviewPlugin(plugins.SingletonPlugin):
         toolkit.add_template_directory(config_, 'templates')
 
     def get_helpers(self):
-        return {'githubrepopreview_repo_statistics': repo_stats}
+        return {'githubrepopreview_repo_statistics': repo_stats,
+                'githubrepopreview_is_repo': is_repo}
 
     def info(self):
         return {'name': 'githubrepo_view', 'title': 'GitHub Repository Viewer',
@@ -90,9 +104,7 @@ class GitHubRepoPreviewPlugin(plugins.SingletonPlugin):
                 'icon': 'folder-open'}
 
     def can_view(self, data_dict):
-        resource = data_dict['resource']
-        type_lower = resource.get('resource_type', '').lower()
-        return type_lower in ['github', 'github_repo', 'github_repository', 'github repo', 'github repository']
+        return is_repo(data_dict['resource']['id'])
 
     def view_template(self, context, data_dict):
         return 'githubrepo.html'
