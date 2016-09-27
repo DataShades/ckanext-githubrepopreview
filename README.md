@@ -7,6 +7,7 @@ A CKAN plugin for previewing GitHub repository resources.
 1. Activate you CKAN python environment and install this extension's software::
 
     $ pyenv/bin/activate
+
     $ pip install -e  git+https://github.com/DataShades/ckanext-githubrepopreview.git#egg=ckanext-githubrepopreview
 
 2. Enable the extension in your CKAN config file by adding it to ``ckan.plugins``::
