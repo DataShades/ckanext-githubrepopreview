@@ -1,0 +1,46 @@
+{% extends 'dataviewer/base.html' %}
+{%- block styles %}
+    {% resource g.main_css[6:] %}
+{% endblock %}
+{%- block scripts %}
+    {% resource 'base/main' %}
+    {% resource 'base/ckan' %}
+    {% if g.tracking_enabled %}
+        {% resource 'base/tracking.js' %}
+    {% endif %}
+{% endblock -%}
+{% block page %}
+
+    <div class="homepage layout-3">
+        <a name="main_content" id="main_content" tabindex="-1"></a>
+        <div role="main">
+            <div class="container">
+                <div class="row row2">
+                    <div class="span12 ">
+                        <!-- Snippet home/snippets/promoted.html start -->
+                        {% set repo_stats = h.githubrepopreview_repo_statistics(resource['url']) %}
+                        {% if not repo_stats %}
+                            Unable to display information for this repository
+                        {% else %}
+                            <div class="module-content box" style="   -webkit-column-count: 2;
+      -moz-column-count: 2;
+           column-count: 2;
+
+   -webkit-column-gap: 20px;
+      -moz-column-gap: 20px;
+           column-gap: 20px;">
+
+                            <ul class="repostats" style="list-style: none;">
+                                {%- for key, value in repo_stats %}
+                                    <li style="list-style: none;    word-break: break-all;-ms-word-break:break-all;">
+                                        <b>{{ key }}</b>: {{ value }}</li>
+                                {%- endfor %}
+                            </ul>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
